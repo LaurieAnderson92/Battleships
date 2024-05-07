@@ -19,20 +19,25 @@ def display_title():
     print('Welcome to Battleships! a nautical game of tactics.\n')
 
 
-def game_setup():
-    game_size = input("Please select a number between 3 and 9 to determine the game size:\n")
-    game_size = int(game_size)
-    try:
-        if not 3 <= game_size < 9:
-            raise ValueError(
-                f"please enter number within the range 3-9, you provided {game_size}"
-            )
-    except ValueError as e:
-        print(f"Invalid data: {e}, please try again.\n")        
-        
-    return int(game_size)
+def collect_name():
+    name = input("Please input your name:\n")
+    return name
 
+def clear(num):
+    for i in range(num): print("") 
+
+def create_cordinates(game_size):
+    grid_array = []
+    column = []
+    for x in range(game_size):
+        column.append("~")
+    for y in range(game_size):
+        grid_array.append(column)
+    print(grid_array)
 
 display_title()
-GAME_SIZE = game_setup()
-print(f"starting a game with a size of {GAME_SIZE}")
+NAME = collect_name()
+clear(80)
+print(f"Welcome to the battle Captain {NAME}, Your fleet awaits")
+GAME_SIZE = 5
+create_cordinates(GAME_SIZE)
