@@ -4,6 +4,9 @@
 
 
 def display_title():
+    """
+    This function diplays the ASCII art ship
+    """
     print('               |    |    |    ')             
     print('              )_)  )_)  )_)   ')           
     print('             )___))___))___)  ')          
@@ -13,6 +16,14 @@ def display_title():
     print('         ^^^^^ ^^^^^^^^^^^^^^^^^^^^^')
     print('        ^^^^      ^^^^     ^^^    ^^')
     print('                 ^^^^      ^^^')
-    print('Welcome to Battleships! a nautical game of tactics.')
+    print('Welcome to Battleships! a nautical game of tactics.\n')
+
+
+def game_setup():
+    game_size = input("Please select a number between 3 and 9 to determine the game size:\n")
+        if game_size
+    return game_size
 
 display_title()
+GAME_SIZE = game_setup()
+print(f"starting a game with a size of {GAME_SIZE}")
