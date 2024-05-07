@@ -21,8 +21,17 @@ def display_title():
 
 def game_setup():
     game_size = input("Please select a number between 3 and 9 to determine the game size:\n")
-        if game_size
-    return game_size
+    game_size = int(game_size)
+    try:
+        if not 3 <= game_size < 9:
+            raise ValueError(
+                f"please enter number within the range 3-9, you provided {game_size}"
+            )
+    except ValueError as e:
+        print(f"Invalid data: {e}, please try again.\n")        
+        
+    return int(game_size)
+
 
 display_title()
 GAME_SIZE = game_setup()
