@@ -33,11 +33,25 @@ def create_cordinates(game_size):
         column.append("~")
     for y in range(game_size):
         grid_array.append(column)
-    print(grid_array)
+    return grid_array
+
+def display_grid(name, grid):
+    """
+    This funtion displays a battle grid for the player
+    """
+    # first row
+    frow = (f"  ")
+    for x in range(GAME_SIZE):
+        frow = frow + f"| {x+1} "
+    frow = frow + "| "
+    print(frow)
+    print((GAME_SIZE*4+4)*"-")
 
 display_title()
 NAME = collect_name()
 clear(80)
 print(f"Welcome to the battle Captain {NAME}, Your fleet awaits")
 GAME_SIZE = 5
-create_cordinates(GAME_SIZE)
+player_grid = create_cordinates(GAME_SIZE)
+enemy_grid = create_cordinates(GAME_SIZE)
+display_grid(NAME, player_grid)
