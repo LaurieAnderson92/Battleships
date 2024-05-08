@@ -48,24 +48,21 @@ def display_grid(name, grid):
     print((GAME_SIZE*4+4)*"-")
 
     # rows 2-6
-    grid_list = 0
-    grid[2][4] = "X"
     for y in range(GAME_SIZE):
         row = f"{y+1} "  
-        list_index = 0
+        grid_list = grid[y]
         for x in range(GAME_SIZE):
-            row = row + f"| {grid[grid_list][list_index]} "
-            list_index + 1
+            row = row + f"| {grid_list[x]} "
         row = row + "| "
         print(row)
-        grid_list + 1
         print((GAME_SIZE*4+4)*"-")
 
 display_title()
 NAME = collect_name()
 clear(80)
-print(f"Welcome to the battle Captain {NAME}, Your fleet awaits")
+print(f"Welcome to the battle Captain {NAME}, Your fleet awaits\n")
 GAME_SIZE = 5
 player_grid = create_cordinates(GAME_SIZE)
 enemy_grid = create_cordinates(GAME_SIZE)
+# test_grid = [["11","22","33","44","55"],["X","Y","C","V","B"],["M","I","D","D","L"],["X","X","X","X","X"],["&","@","$","#","^"]]
 display_grid(NAME, player_grid)
