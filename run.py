@@ -37,17 +37,18 @@ def create_cordinates(game_size):
 
 def display_grid(name, player_grid, enemy_grid):
     """
-    This funtion displays a battle grid for the player
+    This funtion displays the two battlegrids for the player and the enemy
     """
-    # first row
+    print(f"")
+    # 1st row
     frow = (f"  ")
     for x in range(GAME_SIZE):
         frow = frow + f"| {x+1} "
     frow = frow + "|"
-    print((GAME_SIZE*6+2)*" " + frow)
+    print((GAME_SIZE*1)*" " + "Your Fleet" + (GAME_SIZE*3+2)*" " + frow)
     print((GAME_SIZE*4+4)*"-" + "   ||   " + (GAME_SIZE*4+4)*"-")
 
-    # rows 2-6
+    # rows 2+
     for y in range(GAME_SIZE):
         row = f"  "  
         grid_list = player_grid[y]
