@@ -47,6 +47,20 @@ def display_grid(name, grid):
     print(frow)
     print((GAME_SIZE*4+4)*"-")
 
+    # rows 2-6
+    grid_list = 0
+    grid[2][4] = "X"
+    for y in range(GAME_SIZE):
+        row = f"{y+1} "  
+        list_index = 0
+        for x in range(GAME_SIZE):
+            row = row + f"| {grid[grid_list][list_index]} "
+            list_index + 1
+        row = row + "| "
+        print(row)
+        grid_list + 1
+        print((GAME_SIZE*4+4)*"-")
+
 display_title()
 NAME = collect_name()
 clear(80)
