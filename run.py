@@ -35,7 +35,7 @@ def create_cordinates(game_size):
         grid_array.append(column)
     return grid_array
 
-def display_grid(name, grid):
+def display_grid(name, player_grid, enemy_grid):
     """
     This funtion displays a battle grid for the player
     """
@@ -43,26 +43,29 @@ def display_grid(name, grid):
     frow = (f"  ")
     for x in range(GAME_SIZE):
         frow = frow + f"| {x+1} "
-    frow = frow + "| "
-    print(frow)
-    print((GAME_SIZE*4+4)*"-")
+    frow = frow + "|"
+    print((GAME_SIZE*6+2)*" " + frow)
+    print((GAME_SIZE*4+4)*"-" + "   ||   " + (GAME_SIZE*4+4)*"-")
 
     # rows 2-6
     for y in range(GAME_SIZE):
-        row = f"{y+1} "  
-        grid_list = grid[y]
+        row = f"  "  
+        grid_list = player_grid[y]
         for x in range(GAME_SIZE):
             row = row + f"| {grid_list[x]} "
-        row = row + "| "
+        row = row + f"|    ||   {y+1} "
+        grid_list = enemy_grid[y]
+        for x in range(GAME_SIZE):
+            row = row + f"| {grid_list[x]} "
+        row = row + "|"
         print(row)
-        print((GAME_SIZE*4+4)*"-")
+        print((GAME_SIZE*4+4)*"-" + "   ||   " + (GAME_SIZE*4+4)*"-")
 
 display_title()
 NAME = collect_name()
-clear(80)
 print(f"Welcome to the battle Captain {NAME}, Your fleet awaits\n")
 GAME_SIZE = 5
 player_grid = create_cordinates(GAME_SIZE)
 enemy_grid = create_cordinates(GAME_SIZE)
-# test_grid = [["11","22","33","44","55"],["X","Y","C","V","B"],["M","I","D","D","L"],["X","X","X","X","X"],["&","@","$","#","^"]]
-display_grid(NAME, player_grid)
+test_grid = [["5","4","3","2","1"],["X","Y","C","V","B"],["M","I","D","D","L"],["X","X","X","X","X"],["&","@","$","#","^"]]
+display_grid(NAME, player_grid, enemy_grid)
