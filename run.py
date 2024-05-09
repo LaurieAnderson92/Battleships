@@ -26,7 +26,7 @@ def collect_name():
 def clear(num):
     for i in range(num): print("") 
 
-def create_cordinates(game_size):
+def create_grid(game_size):
     grid_array = []
     column = []
     for x in range(game_size):
@@ -34,6 +34,7 @@ def create_cordinates(game_size):
     for y in range(game_size):
         grid_array.append(column)
     return grid_array
+
 
 def display_grid(name, player_grid, enemy_grid):
     """
@@ -66,7 +67,7 @@ display_title()
 NAME = collect_name()
 print(f"Welcome to the battle Captain {NAME}, Your fleet awaits\n")
 GAME_SIZE = 5
-player_grid = create_cordinates(GAME_SIZE)
-enemy_grid = create_cordinates(GAME_SIZE)
+player_grid = create_grid(GAME_SIZE)
+enemy_grid = create_grid(GAME_SIZE)
 test_grid = [["5","4","3","2","1"],["X","Y","C","V","B"],["M","I","D","D","L"],["X","X","X","X","X"],["&","@","$","#","^"]]
 display_grid(NAME, player_grid, enemy_grid)
