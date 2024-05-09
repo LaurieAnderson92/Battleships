@@ -1,6 +1,7 @@
 # Your code goes here.
 # You can delete these comments, but do not change the name of this file
 # Write your code to expect a terminal of 80 characters wide and 24 rows high
+import random
 
 
 def display_title():
@@ -27,6 +28,9 @@ def clear(num):
     for i in range(num): print("") 
 
 def create_grid(game_size):
+    """
+    This function creates a list, containing 5 lists, each containing a string "~" to display the grid cordinates.
+    """
     grid_array = []
     column = []
     for x in range(game_size):
@@ -38,7 +42,7 @@ def create_grid(game_size):
 
 def display_grid(name, player_grid, enemy_grid):
     """
-    This funtion displays the two battlegrids for the player and the enemy
+    This function displays the two battlegrids for the player and the enemy.
     """
     print(f"")
     # 1st row
@@ -63,6 +67,13 @@ def display_grid(name, player_grid, enemy_grid):
         print(row)
         print((GAME_SIZE*4+4)*"-" + "   ||   " + (GAME_SIZE*4+4)*"-")
 
+def random_coordinates():
+    x = random.randrange(0,5)
+    y = random.randrange(0,5)
+    coordinates = [x,y]
+    print(coordinates)
+    return coordinates
+    
 display_title()
 NAME = collect_name()
 print(f"Welcome to the battle Captain {NAME}, Your fleet awaits\n")
