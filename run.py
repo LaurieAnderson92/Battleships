@@ -2,7 +2,14 @@
 # You can delete these comments, but do not change the name of this file
 # Write your code to expect a terminal of 80 characters wide and 24 rows high
 import random
+from colorama import init, Fore
+init(autoreset=True)
 
+
+GAME_SIZE = 5
+NAME = ""
+PLAYER_FLEET = []
+ENEMY_FLEET = []
 
 def display_title():
     """
@@ -13,16 +20,16 @@ def display_title():
     print('             )___))___))___)  ')          
     print('            )____)____)_____) ')
     print('          _____|____|____|______')
-    print(' ---------\\                   /---------')
-    print('         ^^^^^ ^^^^^^^^^^^^^^^^^^^^^')
-    print('        ^^^^      ^^^^     ^^^    ^^')
-    print('                 ^^^^      ^^^')
+    print(Fore.BLUE + ' ---------', Fore.WHITE + '\                    /', Fore.BLUE + '---------')
+    print(Fore.BLUE + '         ^^^^^ ^^^^^^^^^^^^^^^^^^^^^')
+    print(Fore.BLUE + '        ^^^^      ^^^^     ^^^    ^^')
+    print(Fore.BLUE + '                 ^^^^      ^^^')
     print('Welcome to Battleships! a nautical game of tactics.\n')
 
 
 def collect_name():
-    name = input("Please input your name:\n")
-    return name
+    global NAME
+    NAME = input("Please input your name:\n")
 
 def clear(num):
     for i in range(num): print("") 
@@ -73,7 +80,7 @@ def random_coordinates():
     coordinates["y"] = random.randrange(0,5)
     return coordinates
 
-def random_coordinates_x_gamesize():
+def random_coordinates_x_gamesize(fleet):
     cord_set = []
     while len(cord_set) < GAME_SIZE:
         cord = random_coordinates()
@@ -81,8 +88,10 @@ def random_coordinates_x_gamesize():
             continue
         else:
             cord_set.append(cord)
+    if fleet == 1:
+        global PLAYER_FLEET
+        PLAYER_FLEET = cord_set
     print(cord_set)
-    return cord_set
     
 def coordinate_validation(cord, cord_set):
     for existing_cord in cord_set:
@@ -98,13 +107,31 @@ def replace_grid_cords(cords, grid, char):
     y_grid = grid[y]
     y_grid[x] = char
 
+def show_player_fleet_on_grid(grid, fleet):
+    """
+    
+    """
 
-display_title()
-NAME = collect_name()
+if __name__ == "__main__":
+    display_title()
+    collect_name()
+    print(NAME)
+    random_coordinates_x_gamesize(1)
+    random_coordinates_x_gamesize(ENEMY_FLEET)
+    print(PLAYER_FLEET)
+
+
+
+
 print(f"Welcome to the battle Captain {NAME}, Your fleet awaits\n")
-GAME_SIZE = 5
+
 player_grid = [['~', '~', '~', '~', '~'], ['~', '~', '~', '~', '~'],['~', '~', '~', '~', '~'],['~', '~', '~', '~', '~'],['~', '~', '~', '~', '~']]
 enemy_grid = [['~', '~', '~', '~', '~'], ['~', '~', '~', '~', '~'],['~', '~', '~', '~', '~'],['~', '~', '~', '~', '~'],['~', '~', '~', '~', '~']]
-PLAYER_FLEET = random_coordinates_x_gamesize()
 
-display_grid(NAME, player_grid, enemy_grid)
+
+
+
+
+# PLAYER_FLEET = random_coordinates_x_gamesize()
+# display_grid(NAME, player_grid, enemy_grid)
+
