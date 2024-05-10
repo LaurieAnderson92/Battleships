@@ -27,17 +27,17 @@ def collect_name():
 def clear(num):
     for i in range(num): print("") 
 
-def create_grid(game_size):
-    """
-    This function creates a list, containing 5 lists, each containing a string "~" to display the grid cordinates.
-    """
-    grid_array = []
-    column = []
-    for x in range(game_size):
-        column.append("~")
-    for y in range(game_size):
-        grid_array.append(column)
-    return grid_array
+# def create_grid(game_size):
+#     """
+#     This function creates a list, containing 5 lists, each containing a string "~" to display the grid cordinates.
+#     """
+#     grid_array = []
+#     column = []
+#     for x in range(game_size):
+#         column.append("~")
+#     for y in range(game_size):
+#         grid_array.append(column)
+#     return grid_array
 
 
 def display_grid(name, player_grid, enemy_grid):
@@ -89,11 +89,22 @@ def coordinate_validation(cord, cord_set):
         if cord["x"] == existing_cord["x"] and cord["y"] == existing_cord["y"]:
             return True
 
+def replace_grid_cords(cords, grid, char):
+    """
+    This Function takes the cordinates received in a dict format with X and Y values and updates the list item in the grid with the char(acter)
+    """
+    x = cords["x"]
+    y = cords["y"]
+    y_grid = grid[y]
+    y_grid[x] = char
+
+
 display_title()
 NAME = collect_name()
 print(f"Welcome to the battle Captain {NAME}, Your fleet awaits\n")
 GAME_SIZE = 5
-player_grid = create_grid(GAME_SIZE)
-enemy_grid = create_grid(GAME_SIZE)
-display_grid(NAME, player_grid, enemy_grid)
+player_grid = [['~', '~', '~', '~', '~'], ['~', '~', '~', '~', '~'],['~', '~', '~', '~', '~'],['~', '~', '~', '~', '~'],['~', '~', '~', '~', '~']]
+enemy_grid = [['~', '~', '~', '~', '~'], ['~', '~', '~', '~', '~'],['~', '~', '~', '~', '~'],['~', '~', '~', '~', '~'],['~', '~', '~', '~', '~']]
 PLAYER_FLEET = random_coordinates_x_gamesize()
+
+display_grid(NAME, player_grid, enemy_grid)
