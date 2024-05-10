@@ -68,19 +68,26 @@ def display_grid(name, player_grid, enemy_grid):
         print((GAME_SIZE*4+4)*"-" + "   ||   " + (GAME_SIZE*4+4)*"-")
 
 def random_coordinates():
-    x = random.randrange(0,5)
-    y = random.randrange(0,5)
-    coordinates = [x,y]
+    coordinates = {"x" : 0, "y" : 0}
+    coordinates["x"] = random.randrange(0,5)
+    coordinates["y"] = random.randrange(0,5)
     return coordinates
 
 def random_coordinates_x_gamesize():
     cord_set = []
-    for xy in range(GAME_SIZE):
-        cord = random_cordinates()
-        cord_set.append(cord)
+    while len(cord_set) < GAME_SIZE:
+        cord = random_coordinates()
+        if coordinate_validation(cord, cord_set):
+            continue
+        else:
+            cord_set.append(cord)
     print(cord_set)
-
-
+    return cord_set
+    
+def coordinate_validation(cord, cord_set):
+    for existing_cord in cord_set:
+        if cord["x"] == existing_cord["x"] and cord["y"] == existing_cord["y"]:
+            return True
 
 display_title()
 NAME = collect_name()
@@ -88,6 +95,5 @@ print(f"Welcome to the battle Captain {NAME}, Your fleet awaits\n")
 GAME_SIZE = 5
 player_grid = create_grid(GAME_SIZE)
 enemy_grid = create_grid(GAME_SIZE)
-test_grid = [["5","4","3","2","1"],["X","Y","C","V","B"],["M","I","D","D","L"],["X","X","X","X","X"],["&","@","$","#","^"]]
 display_grid(NAME, player_grid, enemy_grid)
-random_coordinates_x_gamesize()
+PLAYER_FLEET = random_coordinates_x_gamesize()
