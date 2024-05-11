@@ -10,6 +10,9 @@ GAME_SIZE = 5
 NAME = ""
 PLAYER_FLEET = []
 ENEMY_FLEET = []
+player_grid = [['~', '~', '~', '~', '~'], ['~', '~', '~', '~', '~'],['~', '~', '~', '~', '~'],['~', '~', '~', '~', '~'],['~', '~', '~', '~', '~']]
+enemy_grid = [['~', '~', '~', '~', '~'], ['~', '~', '~', '~', '~'],['~', '~', '~', '~', '~'],['~', '~', '~', '~', '~'],['~', '~', '~', '~', '~']]
+
 
 def display_title():
     """
@@ -30,22 +33,10 @@ def display_title():
 def collect_name():
     global NAME
     NAME = input("Please input your name:\n")
+    print(f"Welcome to the battle Captain {NAME}, Your fleet awaits\n")
 
 def clear(num):
     for i in range(num): print("") 
-
-# def create_grid(game_size):
-#     """
-#     This function creates a list, containing 5 lists, each containing a string "~" to display the grid cordinates.
-#     """
-#     grid_array = []
-#     column = []
-#     for x in range(game_size):
-#         column.append("~")
-#     for y in range(game_size):
-#         grid_array.append(column)
-#     return grid_array
-
 
 def display_grid(name, player_grid, enemy_grid):
     """
@@ -91,7 +82,9 @@ def random_coordinates_x_gamesize(fleet):
     if fleet == 1:
         global PLAYER_FLEET
         PLAYER_FLEET = cord_set
-    print(cord_set)
+    elif fleet == 2:
+        global ENEMY_FLEET
+        ENEMY_FLEET = cord_set
     
 def coordinate_validation(cord, cord_set):
     for existing_cord in cord_set:
@@ -109,29 +102,19 @@ def replace_grid_cords(cords, grid, char):
 
 def show_player_fleet_on_grid(grid, fleet):
     """
-    
+    This funtions takes the cordinates of the PLAYER_FLEET and changes the display on the grid
     """
+    global player_grid
+    for cords in fleet:
+        replace_grid_cords(cords, player_grid, Fore.GREEN+"@"+Fore.WHITE)
+
+
 
 if __name__ == "__main__":
     display_title()
     collect_name()
-    print(NAME)
     random_coordinates_x_gamesize(1)
-    random_coordinates_x_gamesize(ENEMY_FLEET)
-    print(PLAYER_FLEET)
-
-
-
-
-print(f"Welcome to the battle Captain {NAME}, Your fleet awaits\n")
-
-player_grid = [['~', '~', '~', '~', '~'], ['~', '~', '~', '~', '~'],['~', '~', '~', '~', '~'],['~', '~', '~', '~', '~'],['~', '~', '~', '~', '~']]
-enemy_grid = [['~', '~', '~', '~', '~'], ['~', '~', '~', '~', '~'],['~', '~', '~', '~', '~'],['~', '~', '~', '~', '~'],['~', '~', '~', '~', '~']]
-
-
-
-
-
-# PLAYER_FLEET = random_coordinates_x_gamesize()
-# display_grid(NAME, player_grid, enemy_grid)
+    random_coordinates_x_gamesize(2)
+    show_player_fleet_on_grid(player_grid, PLAYER_FLEET)
+    display_grid(NAME, player_grid, enemy_grid)
 
