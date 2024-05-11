@@ -12,6 +12,7 @@ PLAYER_FLEET = []
 ENEMY_FLEET = []
 player_grid = [['~', '~', '~', '~', '~'], ['~', '~', '~', '~', '~'],['~', '~', '~', '~', '~'],['~', '~', '~', '~', '~'],['~', '~', '~', '~', '~']]
 enemy_grid = [['~', '~', '~', '~', '~'], ['~', '~', '~', '~', '~'],['~', '~', '~', '~', '~'],['~', '~', '~', '~', '~'],['~', '~', '~', '~', '~']]
+coordinates = {}
 
 
 def display_title():
@@ -108,7 +109,25 @@ def show_player_fleet_on_grid(grid, fleet):
     for cords in fleet:
         replace_grid_cords(cords, player_grid, Fore.GREEN+"@"+Fore.WHITE)
 
+def enter_coordinates():
+    """
+    This functions receives a set of coordinates via two inputs and returns a dict of cordinates
+    """
+    coordinates = {"x" : 0, "y" : 0}
+    coordinates["x"] = int(input("Place your shot along the X axsis: \n")) - 1
+    coordinates["y"] = int(input("Place your shot along the Y axsis: \n")) - 1
+    return coordinates
 
+def turn_retrieve_cordinates(shooter):
+    """
+    This function generates the battle cordinates based on the shooter input, 0 for player, 1 for enemy
+    """
+    global coordinates
+    if shooter == 0:
+        coordinates = enter_coordinates()
+    elif shooter == 1:
+        coordinates = random_coordinates()
+    
 
 if __name__ == "__main__":
     display_title()
@@ -117,4 +136,8 @@ if __name__ == "__main__":
     random_coordinates_x_gamesize(2)
     show_player_fleet_on_grid(player_grid, PLAYER_FLEET)
     display_grid(NAME, player_grid, enemy_grid)
-
+    #Start the gameplay loop
+    turn_retrieve_cordinates(0)
+    print(coordinates)
+    turn_retrieve_cordinates(1)
+    print(coordinates)
