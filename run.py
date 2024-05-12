@@ -26,7 +26,7 @@ def display_title():
     print('             )___))___))___)  ')          
     print('            )____)____)_____) ')
     print('          _____|____|____|______')
-    print(Fore.BLUE + ' ---------', Fore.WHITE + '\                    /', Fore.BLUE + '---------')
+    print(Fore.BLUE + ' --------', Fore.WHITE + '|                     /', Fore.BLUE + '---------')
     print(Fore.BLUE + '         ^^^^^ ^^^^^^^^^^^^^^^^^^^^^')
     print(Fore.BLUE + '        ^^^^      ^^^^     ^^^    ^^')
     print(Fore.BLUE + '                 ^^^^      ^^^')
@@ -111,7 +111,7 @@ def show_player_fleet_on_grid(grid, fleet):
     for cords in fleet:
         replace_grid_cords(cords, player_grid, Fore.GREEN+"@"+Fore.WHITE)
 
-def enter_coordinates():
+def enter_coordinates(player_shots):
     """
     This functions receives a set of coordinates via two inputs and returns a dict of cordinates
     """
@@ -121,7 +121,9 @@ def enter_coordinates():
             coordinates["x"] = int(input("Place your shot along the X axsis: \n")) - 1
             coordinates["y"] = int(input("Place your shot along the Y axsis: \n")) - 1
             if (coordinates["x"] < 0 or coordinates["x"] > 4) or (coordinates["y"] < 0 or coordinates["y"] > 4):
-                print(f"Captain, these cordinates are invalid! Please enter cordinates between 1 and 5")
+                print("Captain, these cordinates are invalid! Please enter cordinates between 1 and 5")
+            elif coordinate_validation(coordinates, player_shots):
+                print("Captain, we've already fired on this position!")
             else:
                 break
         except ValueError:
@@ -134,11 +136,17 @@ def turn_retrieve_cordinates(shooter):
     """
     global coordinates
     if shooter == 0:
-        coordinates = enter_coordinates()
+        coordinates = enter_coordinates(player_shots)
     elif shooter == 1:
-        coordinates = random_coordinates()
+        while True:
+            proposed_coordinates = random_coordinates()
+            if coordinate_validation(proposed_coordinates, enemy_shots):
+                continue
+            else:
+                coordinates = proposed_coordinates
+                break
 
-def turn_check_for_hit(coordinates, fleet, grid, player):
+def turn_check_for_hit(coordinates, fleet, grid, player, shots):
     """
     This function takes the global cordinates and cycles through the list of ships in the fleet, judging weither it's a hit or a miss.
     """
@@ -149,15 +157,11 @@ def turn_check_for_hit(coordinates, fleet, grid, player):
             if player == 0:
                 print(f"Success Captain {NAME}! You have hit one of the enemy's ships.")
                 global enemy_fleet
-                global player_shots
                 enemy_fleet = fleet
-                player_shots.append(coordinates)
             else:
                 print(f"Avast Captain {NAME}! They have hit one of our ships.")
                 global player_fleet
-                global enemy_shots
                 player_fleet = fleet
-                enemy_shots.append(coordinates)
             hit_found = True
             replace_grid_cords(coordinates, grid, Fore.RED+"X"+Fore.WHITE)
             break
@@ -167,7 +171,16 @@ def turn_check_for_hit(coordinates, fleet, grid, player):
         else:
             print(f"What fortune Captain {NAME}! their shot missed our fleet.")
         replace_grid_cords(coordinates, grid, "X")
+    turn_add_to_shot_list(player, coordinates, shots)
 
+def turn_add_to_shot_list(player, coordinates, shots):
+    global player_shots
+    global enemy_shots
+    shots.append(coordinates)
+    if player == 0:
+        player_shots = shots
+    elif player == 1:
+        enemy_shots = shots
 
 if __name__ == "__main__":
     display_title()
@@ -180,13 +193,14 @@ if __name__ == "__main__":
     while (len(player_fleet)) > 0 and (len(enemy_fleet) > 0):
         turn_retrieve_cordinates(0)
         clear(5)
-        turn_check_for_hit(coordinates, enemy_fleet, enemy_grid, 0)
+        turn_check_for_hit(coordinates, enemy_fleet, enemy_grid, 0, player_shots)
         print("The enemy is returning fire!")
         turn_retrieve_cordinates(1)
-        turn_check_for_hit(coordinates, player_fleet, player_grid, 1)
+        turn_check_for_hit(coordinates, player_fleet, player_grid, 1, enemy_shots)
         display_grid(NAME, player_grid, enemy_grid)
-        print(f"Player shots {player_shots}")
-        if len(player_fleet) == 0:
+        if (len(player_fleet) == 0) and (len(enemy_fleet) == 0):
+            print("The game has ended in a draw.")
+        elif len(player_fleet) == 0:
             print("The game has ended in defeat.")
         elif len(enemy_fleet) == 0:
             print("The game has ended in victory!")
