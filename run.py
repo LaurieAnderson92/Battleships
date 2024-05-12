@@ -118,8 +118,8 @@ def enter_coordinates(player_shots):
     coordinates = {"x" : 0, "y" : 0}
     while True:
         try:
-            coordinates["x"] = int(input("Place your shot along the X axsis: \n")) - 1
-            coordinates["y"] = int(input("Place your shot along the Y axsis: \n")) - 1
+            coordinates["x"] = int(input("Place your shot along the X axis: \n")) - 1
+            coordinates["y"] = int(input("Place your shot along the Y axis: \n")) - 1
             if (coordinates["x"] < 0 or coordinates["x"] > 4) or (coordinates["y"] < 0 or coordinates["y"] > 4):
                 print("Captain, these cordinates are invalid! Please enter cordinates between 1 and 5")
             elif coordinate_validation(coordinates, player_shots):
@@ -155,11 +155,11 @@ def turn_check_for_hit(coordinates, fleet, grid, player, shots):
         if (coordinates["x"] == ship["x"]) and (coordinates["y"] == ship["y"]):
             fleet.remove(ship)
             if player == 0:
-                print(f"Success Captain {NAME}! You have hit one of the enemy's ships.")
+                print(f"Success Captain {NAME}! You have hit one of the enemy's ships.\n")
                 global enemy_fleet
                 enemy_fleet = fleet
             else:
-                print(f"Avast Captain {NAME}! They have hit one of our ships.")
+                print(f"Avast Captain {NAME}! They have hit one of our ships.\n")
                 global player_fleet
                 player_fleet = fleet
             hit_found = True
@@ -167,9 +167,9 @@ def turn_check_for_hit(coordinates, fleet, grid, player, shots):
             break
     if not hit_found:
         if player == 0:
-            print(f"Miss Captain {NAME}, Your shot missed the enemy's fleet.")
+            print(f"Miss Captain {NAME}, Your shot missed the enemy's fleet.\n")
         else:
-            print(f"What fortune Captain {NAME}! their shot missed our fleet.")
+            print(f"What fortune Captain {NAME}! their shot missed our fleet.\n")
         replace_grid_cords(coordinates, grid, "X")
     turn_add_to_shot_list(player, coordinates, shots)
 
@@ -192,7 +192,7 @@ if __name__ == "__main__":
     #Start the gameplay loop
     while (len(player_fleet)) > 0 and (len(enemy_fleet) > 0):
         turn_retrieve_cordinates(0)
-        clear(5)
+        clear(6)
         turn_check_for_hit(coordinates, enemy_fleet, enemy_grid, 0, player_shots)
         print("The enemy is returning fire!")
         turn_retrieve_cordinates(1)
