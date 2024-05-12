@@ -114,8 +114,16 @@ def enter_coordinates():
     This functions receives a set of coordinates via two inputs and returns a dict of cordinates
     """
     coordinates = {"x" : 0, "y" : 0}
-    coordinates["x"] = int(input("Place your shot along the X axsis: \n")) - 1
-    coordinates["y"] = int(input("Place your shot along the Y axsis: \n")) - 1
+    while True:
+        try:
+            coordinates["x"] = int(input("Place your shot along the X axsis: \n")) - 1
+            coordinates["y"] = int(input("Place your shot along the Y axsis: \n")) - 1
+            if (coordinates["x"] <= 0 or coordinates["x"] > 4) or (coordinates["y"] <= 0 or coordinates["y"] > 4):
+                print(f"Captain, these cordinates are invalid! Please enter cordinates between 1 and 5")
+            else:
+                break
+        except ValueError:
+            print("Captain,that's not even a number! Please enter cordinates between 1 and 5")
     return coordinates
 
 def turn_retrieve_cordinates(shooter):
@@ -127,7 +135,22 @@ def turn_retrieve_cordinates(shooter):
         coordinates = enter_coordinates()
     elif shooter == 1:
         coordinates = random_coordinates()
-    
+
+def turn_check_for_hit(coordinates, fleet, grid):
+    """
+    This function takes the global cordinates and cycles through the list of ships in the fleet, judging weither it's a hit or a miss.
+    """
+    hit_found = False
+    for ship in fleet:
+        if (coordinates["x"] == ship["x"]) and (coordinates["y"] == ship["y"]):
+            print(f"Success Captain {NAME}! You have hit one of the enemy's ships.")
+            hit_found = True
+            replace_grid_cords(coordinates, grid, Fore.RED+"X"+Fore.WHITE)
+            break
+    if not hit_found:
+        print(f"Miss Captain {NAME}, Your shot missed the enemy's fleet.")
+        replace_grid_cords(coordinates, grid, "X")
+
 
 if __name__ == "__main__":
     display_title()
@@ -138,6 +161,7 @@ if __name__ == "__main__":
     display_grid(NAME, player_grid, enemy_grid)
     #Start the gameplay loop
     turn_retrieve_cordinates(0)
-    print(coordinates)
+    turn_check_for_hit(coordinates, ENEMY_FLEET, enemy_grid)
+    display_grid(NAME, player_grid, enemy_grid)
     turn_retrieve_cordinates(1)
     print(coordinates)
