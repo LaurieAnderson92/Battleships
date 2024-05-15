@@ -1,32 +1,47 @@
-# Your code goes here.
-# You can delete these comments, but do not change the name of this file
-# Write your code to expect a terminal of 80 characters wide and 24 rows high
+"""This file runs a game of battleships in the terminal."""
+# Imports and requirements
 import random
+import os
 from colorama import init, Fore
+# Below function from colorama auto resets the color to white for every line.
 init(autoreset=True)
 
-
+# Global variables
 GAME_SIZE = 5
 NAME = ""
 player_fleet = []
 enemy_fleet = []
-player_grid = [['~', '~', '~', '~', '~'], ['~', '~', '~', '~', '~'],['~', '~', '~', '~', '~'],['~', '~', '~', '~', '~'],['~', '~', '~', '~', '~']]
-enemy_grid = [['~', '~', '~', '~', '~'], ['~', '~', '~', '~', '~'],['~', '~', '~', '~', '~'],['~', '~', '~', '~', '~'],['~', '~', '~', '~', '~']]
+player_grid = [
+    ['~', '~', '~', '~', '~'],
+    ['~', '~', '~', '~', '~'],
+    ['~', '~', '~', '~', '~'],
+    ['~', '~', '~', '~', '~'],
+    ['~', '~', '~', '~', '~']
+    ]
+enemy_grid = [
+    ['~', '~', '~', '~', '~'],
+    ['~', '~', '~', '~', '~'],
+    ['~', '~', '~', '~', '~'],
+    ['~', '~', '~', '~', '~'],
+    ['~', '~', '~', '~', '~']
+    ]
 coordinates = {}
 player_shots = []
 enemy_shots = []
 
 
 def display_title():
-    """
-    This function diplays the ASCII art ship
-    """
-    print('               |    |    |    ')             
-    print('              )_)  )_)  )_)   ')           
-    print('             )___))___))___)  ')          
+    """This function creates a ASCII art ship."""
+    print('               |    |    |    ')
+    print('              )_)  )_)  )_)   ')
+    print('             )___))___))___)  ')
     print('            )____)____)_____) ')
     print('          _____|____|____|______')
-    print(Fore.BLUE + ' --------', Fore.WHITE + '|                     /', Fore.BLUE + '---------')
+    print(
+        Fore.BLUE + ' --------',
+        Fore.WHITE + '|                   /',
+        Fore.BLUE + '---------'
+    )
     print(Fore.BLUE + '         ^^^^^ ^^^^^^^^^^^^^^^^^^^^^')
     print(Fore.BLUE + '        ^^^^      ^^^^     ^^^    ^^')
     print(Fore.BLUE + '                 ^^^^      ^^^')
@@ -34,20 +49,33 @@ def display_title():
 
 
 def collect_name():
+    """
+    This function will collect the input from the player.
+
+    It is later used as a variable.
+    """
     global NAME
     NAME = input("Please input your name:\n")
     print(f"Welcome to the battle Captain {NAME}, Your fleet awaits\n")
 
-def clear(num):
-    for i in range(num): print("") 
+
+# This function was given to me by my mentor Rory Ratrick Sheridan
+def clear():
+    """Clear function to clean-up the terminal so things don't get messy."""
+    os.system("cls" if os.name == "nt" else "clear")
+# End of borrowed code
+
 
 def display_grid(name, player_grid, enemy_grid):
     """
-    This function displays the two battlegrids for the player and the enemy.
+    This function displays the two battlegrids.
+
+    it makes one for the player(left) and the enemy(right) based off
+    the GAME_SIZE value.
     """
-    print(f"")
+    print("")
     # 1st row
-    frow = (f"  ")
+    frow = ("  ")
     for x in range(GAME_SIZE):
         frow = frow + f"| {x+1} "
     frow = frow + "|"
@@ -56,7 +84,7 @@ def display_grid(name, player_grid, enemy_grid):
 
     # rows 2+
     for y in range(GAME_SIZE):
-        row = f"  "  
+        row = "  "
         grid_list = player_grid[y]
         for x in range(GAME_SIZE):
             row = row + f"| {grid_list[x]} "
@@ -68,13 +96,26 @@ def display_grid(name, player_grid, enemy_grid):
         print(row)
         print((GAME_SIZE*4+4)*"-" + "   ||   " + (GAME_SIZE*4+4)*"-")
 
+
 def random_coordinates():
-    coordinates = {"x" : 0, "y" : 0}
-    coordinates["x"] = random.randrange(0,5)
-    coordinates["y"] = random.randrange(0,5)
+    """
+    This funtion uses python's random library to generate two random numbers.
+
+    The numbers are between between 0 and 4 and put them into
+    a dict to be used as coordinates.
+    """
+    coordinates = {"x": 0, "y": 0}
+    coordinates["x"] = random.randrange(0, 5)
+    coordinates["y"] = random.randrange(0, 5)
     return coordinates
 
+
 def random_coordinates_x_gamesize(fleet):
+    """
+    This function creates 5 random cordinates.
+
+    it will then use them as placement for the five ships on each side.
+    """
     cord_set = []
     while len(cord_set) < GAME_SIZE:
         cord = random_coordinates()
@@ -88,51 +129,70 @@ def random_coordinates_x_gamesize(fleet):
     elif fleet == 2:
         global enemy_fleet
         enemy_fleet = cord_set
-    
+
+
 def coordinate_validation(cord, cord_set):
+    """This function checks cord against a cord_set to look for duplicates."""
     for existing_cord in cord_set:
         if cord["x"] == existing_cord["x"] and cord["y"] == existing_cord["y"]:
             return True
 
+
 def replace_grid_cords(cords, grid, char):
-    """
-    This Function takes the cordinates received in a dict format with X and Y values and updates the list item in the grid with the char(acter)
+    """This Function takes the cordinates received in a dict format.
+
+    Then updates the list item in the grid with the char(acter)
     """
     x = cords["x"]
     y = cords["y"]
     y_grid = grid[y]
     y_grid[x] = char
 
+
 def show_player_fleet_on_grid(grid, fleet):
-    """
-    This funtions takes the cordinates of the PLAYER_FLEET and changes the display on the grid
-    """
+    """This funtions takes PLAYER_FLEET and changes the display on the grid."""
     global player_grid
     for cords in fleet:
         replace_grid_cords(cords, player_grid, Fore.GREEN+"@"+Fore.WHITE)
 
+
 def enter_coordinates(player_shots):
-    """
-    This functions receives a set of coordinates via two inputs and returns a dict of cordinates
-    """
-    coordinates = {"x" : 0, "y" : 0}
+    """This functions receives two inputs and returns a dict if valid."""
+    coordinates = {"x": 0, "y": 0}
     while True:
         try:
-            coordinates["x"] = int(input("Place your shot along the X axis: \n")) - 1
-            coordinates["y"] = int(input("Place your shot along the Y axis: \n")) - 1
-            if (coordinates["x"] < 0 or coordinates["x"] > 4) or (coordinates["y"] < 0 or coordinates["y"] > 4):
-                print("Captain, these cordinates are invalid! Please enter cordinates between 1 and 5")
+            coordinates["x"] = int(
+                                   input(
+                                    "Place your shot along the X axis: \n"
+                                        )
+                                   ) - 1
+            coordinates["y"] = int(
+                                   input(
+                                    "Place your shot along the Y axis: \n"
+                                        )
+                                   ) - 1
+            if (
+                coordinates["x"] < 0 or coordinates["x"] > 4
+            ) or (
+                coordinates["y"] < 0 or coordinates["y"] > 4
+            ):
+                print("Captain, these cordinates are invalid!" +
+                      " Please enter cordinates between 1 and 5")
             elif coordinate_validation(coordinates, player_shots):
                 print("Captain, we've already fired on this position!")
             else:
                 break
         except ValueError:
-            print("Captain,that's not even a number! Please enter cordinates between 1 and 5")
+            print("Captain,that's not even a number!" +
+                  " Please enter cordinates between 1 and 5")
     return coordinates
 
+
 def turn_retrieve_cordinates(shooter):
-    """
-    This function generates the battle cordinates based on the shooter input, 0 for player, 1 for enemy
+    """This function will generate the battle cordinates based on shooter.
+
+    0 for player
+    1 for enemy
     """
     global coordinates
     if shooter == 0:
@@ -146,20 +206,27 @@ def turn_retrieve_cordinates(shooter):
                 coordinates = proposed_coordinates
                 break
 
+
 def turn_check_for_hit(coordinates, fleet, grid, player, shots):
     """
-    This function takes the global cordinates and cycles through the list of ships in the fleet, judging weither it's a hit or a miss.
+    This function takes the global cordinates and cycles through the fleet.
+
+    it judges weither it's a hit or a miss.
     """
     hit_found = False
     for ship in fleet:
         if (coordinates["x"] == ship["x"]) and (coordinates["y"] == ship["y"]):
             fleet.remove(ship)
             if player == 0:
-                print(f"Success Captain {NAME}! You have hit one of the enemy's ships.\n")
+                print(
+                    f"Success Captain {NAME}! You have hit an enemy ship!\n"
+                      )
                 global enemy_fleet
                 enemy_fleet = fleet
             else:
-                print(f"Avast Captain {NAME}! They have hit one of our ships.\n")
+                print(
+                    f"Avast Captain {NAME}! They have hit a allied ship.\n"
+                      )
                 global player_fleet
                 player_fleet = fleet
             hit_found = True
@@ -167,13 +234,19 @@ def turn_check_for_hit(coordinates, fleet, grid, player, shots):
             break
     if not hit_found:
         if player == 0:
-            print(f"Miss Captain {NAME}, Your shot missed the enemy's fleet.\n")
+            print(
+                f"Miss Captain {NAME}, Your shot missed the enemy.\n"
+                  )
         else:
-            print(f"What fortune Captain {NAME}! their shot missed our fleet.\n")
+            print(
+                f"What fortune Captain {NAME}! Their shot missed us!\n"
+                  )
         replace_grid_cords(coordinates, grid, "X")
     turn_add_to_shot_list(player, coordinates, shots)
 
+
 def turn_add_to_shot_list(player, coordinates, shots):
+    """This function takes the shot and adds it to a list."""
     global player_shots
     global enemy_shots
     shots.append(coordinates)
@@ -182,6 +255,7 @@ def turn_add_to_shot_list(player, coordinates, shots):
     elif player == 1:
         enemy_shots = shots
 
+
 if __name__ == "__main__":
     display_title()
     collect_name()
@@ -189,14 +263,22 @@ if __name__ == "__main__":
     random_coordinates_x_gamesize(2)
     show_player_fleet_on_grid(player_grid, player_fleet)
     display_grid(NAME, player_grid, enemy_grid)
-    #Start the gameplay loop
+    # this is the start the gameplay loop which keeps running
+    # until one of thre three win conditions are true
     while (len(player_fleet)) > 0 and (len(enemy_fleet) > 0):
-        turn_retrieve_cordinates(0)
-        clear(6)
-        turn_check_for_hit(coordinates, enemy_fleet, enemy_grid, 0, player_shots)
+        turn_retrieve_cordinates(0)  # player input
+        clear()  # This clears the terminal
+        # Checks the player's shot for a hit
+        turn_check_for_hit(
+            coordinates, enemy_fleet, enemy_grid, 0, player_shots
+                           )
         print("The enemy is returning fire!")
-        turn_retrieve_cordinates(1)
-        turn_check_for_hit(coordinates, player_fleet, player_grid, 1, enemy_shots)
+        turn_retrieve_cordinates(1)  # random computer input
+        # Checks the enemy's shot for a hit
+        turn_check_for_hit(
+            coordinates, player_fleet, player_grid, 1, enemy_shots
+                           )
+        # Displays the grid once again with the updated values
         display_grid(NAME, player_grid, enemy_grid)
         if (len(player_fleet) == 0) and (len(enemy_fleet) == 0):
             print("The game has ended in a draw.")
