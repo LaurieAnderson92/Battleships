@@ -55,7 +55,14 @@ def collect_name():
     It is later used as a variable.
     """
     global NAME
-    NAME = input("Please input your name:\n")
+    while True:
+        NAME = input("Please input your name:\n")
+        if NAME.isalpha() and len(NAME) <= 12:
+            break
+        else:
+            print("Captain, that name need to change. " + 
+            "Please it to under 12 characters using only a-z"
+                  )
     print(f"Welcome to the battle Captain {NAME}, Your fleet awaits\n")
 
 
