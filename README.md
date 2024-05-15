@@ -2,55 +2,24 @@
 
 This apication is a simple battleships game played on a 5x5 grid, i chose this project to try and best understand the core mechanics of pythin and to gain experience with game design.
 
-https://fullstack-battleships-4cdb574b78af.herokuapp.com/
+(It is avilablke to play here )[https://fullstack-battleships-4cdb574b78af.herokuapp.com/]
+
+!(battleships)[assets/documentation/battleship-screenshot.png]
 
 ---
 
 ## CONTENTS
 
-* [User Experience](#user-experience-ux)
-  * [User Stories](#user-stories)
-
-* [Design](#design)
-  * [Colour Scheme](#colour-scheme)
-  * [Typography](#typography)
-  * [Imagery](#imagery)
-  * [Wireframes](#wireframes)
-
-* [Features](#features)
-  * [General Features on Each Page](#general-features-on-each-page)
-  * [Future Implementations](#future-implementations)
-  * [Accessibility](#accessibility)
-
-* [Technologies Used](#technologies-used)
-  * [Languages Used](#languages-used)
-  * [Frameworks, Libraries & Programs Used](#frameworks-libraries--programs-used)
-
-* [Deployment & Local Development](#deployment--local-development)
-  * [Deployment](#deployment)
-  * [Local Development](#local-development)
-    * [How to Fork](#how-to-fork)
-    * [How to Clone](#how-to-clone)
-
-* [Testing](#testing)
-
-* [Credits](#credits)
-  * [Code Used](#code-used)
-  * [Content](#content)
-  * [Media](#media)
-  * [Acknowledgments](#acknowledgments)
 
 ---
-
-## User Experience (UX)
 
 ### Initial Description
 
 Welcome to the Battleship Game This is an interactive version of the classic board game, designed to be played directly within a command line terminal. Dive in to challenge your skills against the computer.
 
-**Interactive Gameplay:** Input your cordinates and try to find the enemy ships, like the classic game 
-**Dynamic Board:** New positions for yourelf and the enemy for every game.
-**Color display:** using bthe dependency Colorama,the application can display colour into the command line.
+- **Interactive Gameplay:** Input your cordinates and try to find the enemy ships, like the classic game. 
+- **Dynamic Board:** New positions for yourelf and the enemy for every game.
+- **Color display:** Using the dependency Colorama,the application can display colour into the command line.
 
 ## Design
 
@@ -58,11 +27,11 @@ Welcome to the Battleship Game This is an interactive version of the classic boa
 
 They key part of the design is the gamplay loop that takes the players cordinates and the enemy's cordinates, checks them and then checks for a win/loose/draw situation.
 
-In a tradional game of battleships, the player who has the first move has an advantage, the smaller the battle map the bigger the advante, as i decided to do a small game of 5x5 having the program allow the enemy to return fire before checking for victory allowed for an even game, with an even number of shots on both sides, and the potential for a draw.
+In a tradional game of battleships, the player who has the first move has an advantage, the smaller the battle map the bigger that advantage, as I decided to do a small game of 5x5 having the program allow the enemy to return fire before checking for victory allowed for an even game, with an even number of shots on both sides, and the potential for a draw.
 
 ### Flowchart
 
-[Flowchart](assets/documentation/flowchart.png)
+![Flowchart](assets/documentation/flowchart.png)
 
 ## Features
 
@@ -89,25 +58,33 @@ In a tradional game of battleships, the player who has the first move has an adv
 - Git
 - Github
 - Gitpod
-- Heroku
+- (Heroku)[https://www.heroku.com/home]
 
 ## Deployment & Local Development
 
 ### Deployment
 
-Include instructions here on how to deploy your project. For your first project you will most likely be using GitHub Pages.
+To deploy to the application hosting site (Heroku)[https://www.heroku.com/home] the below steps were followed:
+
+1. Choose an App name and set hosting region to Europe, then select "Create app".
+2. Go to the Settings and add two Buildpacks in this order 
+  - Python 
+  - NodeJS
+3. Go to the Settings to add a Config Vars: KEY = `PORT` and VALUE = `8000`
+4. Select "Deploy" from the top menu.
+5. Link the GitHub account by setting it as the deployment method, searching for the repository name, and selecting "Connect".
+6. Click "Deploy Branch".
 
 ### Local Development
 
-The local development section gives instructions on how someone else could make a copy of your project to play with on their local machine. This section will get more complex in the later projects, and can be a great reference to yourself if you forget how to do this.
+To clone this repository in your local IDE, enter the following into the terminal in your chosed IDE:
+
+`git clone https://github.com/LaurieAnderson92/Battleships.git`
 
 #### How to Fork
 
-Place instructions on how to fork your project here.
-
-#### How to Clone
-
-Place instructions on how to clone your project here.
+1. Navigate to the github repositry found (here)[https://github.com/LaurieAnderson92/Battleships]
+2. Click on the **Fork** button.
 
 ## Testing
 
@@ -117,21 +94,31 @@ Testing was carried out during the creation of the progam and after when I opene
 
 - Took turns firing missiles at the opponent's ships. using injected print statements to ensure hits are detected correctly and that the game state updates accordingly.
 
+
 ### Bugs & Fixes
 
-- Bug: Name has no validation on the limit, which means a name of endless characters could be implemented.
-- Fix:
-- Status: Pending
+> Bug: Name has no validation on the limit, which means a name of endless characters could be implemented.
+> Fix:
+> Status: Pending
 
-- Bug: Unclear that it's five 1x1 ships on the grid
-- Fix: 
-- Status: Pending
+> Bug: Unclear that it's five 1x1 ships on the grid
+> Fix: 
+> Status: Pending
 
-- Bug: if multiple invalid inputs are placed, the battle grid goes out of view of the heroku terminal
-- Fix:
-- Status: Pending
+> Bug: if multiple invalid inputs are placed, the battle grid goes out of view of the heroku terminal
+> Fix:
+> Status: Pending
 
 ## Credits
 
+### Code used
+- The clear function was given to me by my Code Institute mentor Rory and has been clearly marked as such within run.py
+> `def clear():`
+>    `"""Clear function to clean-up the terminal so things don't get messy."""`
+>    `os.system("cls" if os.name == "nt" else "clear")`
+
+### Acknolegements
 - My best friend [Jordan Cook](https://github.com/Bowtie7114), for helping me with my Imposter syndrome and giving me the last push I needed.
 - My mentor [Rory Patrick Sheridan](https://github.com/Ri-Dearg), for his continued and invaluable help and insight.
+- W3Schools for Python Reminders and look ups for funtionality.
+- [Phind](https://www.phind.com/search?home=true) for generating this README Template
