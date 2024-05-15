@@ -61,7 +61,7 @@ def collect_name():
             break
         else:
             print("Captain, that name need to change. " + 
-            "Please it to under 12 characters using only a-z"
+            "Please alter it to be under 12 characters using only a-z"
                   )
     print(f"Welcome to the battle Captain {NAME}, Your fleet awaits\n")
 
