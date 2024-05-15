@@ -102,6 +102,11 @@ def display_grid(name, player_grid, enemy_grid):
         row = row + "|"
         print(row)
         print((GAME_SIZE*4+4)*"-" + "   ||   " + (GAME_SIZE*4+4)*"-")
+    print("Captain, each ship takes up one space on the grid")
+    print(f"We have {len(player_fleet)} ships left, " + 
+            f"while the enemy have {len(enemy_fleet)}"
+          )
+    print("")
 
 
 def random_coordinates():
