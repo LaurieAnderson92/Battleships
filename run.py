@@ -31,7 +31,7 @@ enemy_shots = []
 
 
 def display_title():
-    """This function creates a ASCII art ship."""
+    """Create a ASCII art ship."""
     print('               |    |    |    ')
     print('              )_)  )_)  )_)   ')
     print('             )___))___))___)  ')
@@ -50,7 +50,7 @@ def display_title():
 
 def collect_name():
     """
-    This function will collect the input from the player.
+    Collect the input from the player.
 
     It is later used as a variable.
     """
@@ -68,7 +68,7 @@ def clear():
 
 def display_grid(name, player_grid, enemy_grid):
     """
-    This function displays the two battlegrids.
+    Generate the two battlegrids.
 
     it makes one for the player(left) and the enemy(right) based off
     the GAME_SIZE value.
@@ -99,7 +99,7 @@ def display_grid(name, player_grid, enemy_grid):
 
 def random_coordinates():
     """
-    This funtion uses python's random library to generate two random numbers.
+    Generate two random numbers.
 
     The numbers are between between 0 and 4 and put them into
     a dict to be used as coordinates.
@@ -112,7 +112,7 @@ def random_coordinates():
 
 def random_coordinates_x_gamesize(fleet):
     """
-    This function creates 5 random cordinates.
+    Create 5 random cordinates.
 
     it will then use them as placement for the five ships on each side.
     """
@@ -132,14 +132,14 @@ def random_coordinates_x_gamesize(fleet):
 
 
 def coordinate_validation(cord, cord_set):
-    """This function checks cord against a cord_set to look for duplicates."""
+    """Check cord against a cord_set to look for duplicates."""
     for existing_cord in cord_set:
         if cord["x"] == existing_cord["x"] and cord["y"] == existing_cord["y"]:
             return True
 
 
 def replace_grid_cords(cords, grid, char):
-    """This Function takes the cordinates received in a dict format.
+    """Take the cordinates received in a dict format.
 
     Then updates the list item in the grid with the char(acter)
     """
@@ -150,14 +150,14 @@ def replace_grid_cords(cords, grid, char):
 
 
 def show_player_fleet_on_grid(grid, fleet):
-    """This funtions takes PLAYER_FLEET and changes the display on the grid."""
+    """Take PLAYER_FLEET and changes the display on the grid."""
     global player_grid
     for cords in fleet:
         replace_grid_cords(cords, player_grid, Fore.GREEN+"@"+Fore.WHITE)
 
 
 def enter_coordinates(player_shots):
-    """This functions receives two inputs and returns a dict if valid."""
+    """Input two numbers and return a dict if valid."""
     coordinates = {"x": 0, "y": 0}
     while True:
         try:
@@ -189,7 +189,7 @@ def enter_coordinates(player_shots):
 
 
 def turn_retrieve_cordinates(shooter):
-    """This function will generate the battle cordinates based on shooter.
+    """Generate the battle cordinates based on shooter.
 
     0 for player
     1 for enemy
@@ -209,7 +209,7 @@ def turn_retrieve_cordinates(shooter):
 
 def turn_check_for_hit(coordinates, fleet, grid, player, shots):
     """
-    This function takes the global cordinates and cycles through the fleet.
+    Take the global cordinates and cycles through the fleet.
 
     it judges weither it's a hit or a miss.
     """
@@ -246,7 +246,7 @@ def turn_check_for_hit(coordinates, fleet, grid, player, shots):
 
 
 def turn_add_to_shot_list(player, coordinates, shots):
-    """This function takes the shot and adds it to a list."""
+    """Take the shot and adds it to a list."""
     global player_shots
     global enemy_shots
     shots.append(coordinates)
