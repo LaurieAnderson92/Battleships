@@ -2,9 +2,9 @@
 
 This apication is a simple battleships game played on a 5x5 grid, i chose this project to try and best understand the core mechanics of pythin and to gain experience with game design.
 
-(It is avilablke to play here )[https://fullstack-battleships-4cdb574b78af.herokuapp.com/]
+[It is avilablke to play here](https://fullstack-battleships-4cdb574b78af.herokuapp.com/)
 
-!(battleships)[assets/documentation/battleship-screenshot.png]
+![battleships](assets/documentation/battleship-screenshot.png)
 
 ---
 
@@ -54,17 +54,17 @@ In a tradional game of battleships, the player who has the first move has an adv
 
 ### Frameworks, Libraries & Programs Used
 
-- Colorama
-- Git
-- Github
-- Gitpod
-- (Heroku)[https://www.heroku.com/home]
+- [Colorama](https://pypi.org/project/colorama/)
+- [Git](https://git-scm.com/)
+- [Github](https://github.com/)
+- [Gitpod](https://www.gitpod.io/)
+- [Heroku](https://www.heroku.com/home)
 
 ## Deployment & Local Development
 
 ### Deployment
 
-To deploy to the application hosting site (Heroku)[https://www.heroku.com/home] the below steps were followed:
+To deploy to the application hosting site [Heroku](https://www.heroku.com/home) the below steps were followed:
 
 1. Choose an App name and set hosting region to Europe, then select "Create app".
 2. Go to the Settings and add two Buildpacks in this order 
@@ -81,10 +81,14 @@ To clone this repository in your local IDE, enter the following into the termina
 
 `git clone https://github.com/LaurieAnderson92/Battleships.git`
 
+Please ensure python is installed on your computer.
+
 #### How to Fork
 
-1. Navigate to the github repositry found (here)[https://github.com/LaurieAnderson92/Battleships]
+1. Navigate to the github repositry found [here](https://github.com/LaurieAnderson92/Battleships)
 2. Click on the **Fork** button.
+
+Please ensure python is installed on your computer.
 
 ## Testing
 
@@ -93,29 +97,30 @@ Testing was carried out during the creation of the progam and after when I opene
 ### Tests
 
 - Took turns firing missiles at the opponent's ships. using injected print statements to ensure hits are detected correctly and that the game state updates accordingly.
-
+- Tested the NAME input to ensure no rogue data could get into the system, the results can be seen [here](assets/documentation/battleships-name-testing.png)
+- Tested the coordinate input to ensure no rogue data could get into the system, the results can be seen [here](assets/documentation/battleships-cord-testing.png)
 
 ### Bugs & Fixes
 
-> Bug: Name has no validation on the limit, which means a name of endless characters could be implemented.
-> Fix:
-> Status: Pending
+> - **Bug:** Name has no validation on the limit, which means a name of endless characters could be implemented.
+> - **Fix:** commit bf61752
+> - **Status:** Complete
 
-> Bug: Unclear that it's five 1x1 ships on the grid
-> Fix: 
-> Status: Pending
+> - **Bug:** Unclear that it's five 1x1 ships on the grid
+> - **Fix:** commits 0ccc720 & 02ee683
+> - **Status:** Complete
 
-> Bug: if multiple invalid inputs are placed, the battle grid goes out of view of the heroku terminal
-> Fix:
-> Status: Pending
+> - **Bug:** if multiple invalid inputs are placed, the battle grid goes out of view of the heroku terminal
+> - **Proposed Fix:** a for loop for each input, to clear the screen and repost the grid after 4 failed attempts
+> - **Status:** Pending
 
 ## Credits
 
 ### Code used
-- The clear function was given to me by my Code Institute mentor Rory and has been clearly marked as such within run.py
-> `def clear():`
->    `"""Clear function to clean-up the terminal so things don't get messy."""`
->    `os.system("cls" if os.name == "nt" else "clear")`
+The clear function was given to me by my Code Institute mentor Rory and has been clearly marked as such within run.py
+> `def clear():`\
+>   `"""Clear function to clean-up the terminal so things don't get messy."""`\
+>   `os.system("cls" if os.name == "nt" else "clear")`
 
 ### Acknolegements
 - My best friend [Jordan Cook](https://github.com/Bowtie7114), for helping me with my Imposter syndrome and giving me the last push I needed.
